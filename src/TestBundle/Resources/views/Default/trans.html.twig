@@ -1,0 +1,13 @@
+{% extends "@Test/template.html.twig" %}
+
+
+{% block body %}
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% for t in transtolangs %}
+                {{ t.lang.code }} = {{ t.trans }} <br>
+            {% endfor %}
+        </div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "@Test/template.html.twig" %}
+
+
+{% block body %}
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% for user in users %}
+                {{ user|length }}
+                {{ user.username }} <br>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% for lang in langs %}
+                {{ lang.code }}<br>
+                {% endfor %}
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% for domain in domains %}
+                {{ domain.name }}<br>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% for translation in translations %}
+                <a href="{{ path('test_transtolang', {id: translation.id}) }}">{{ translation.code }}</a><br>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

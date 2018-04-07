@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [[ ! -d "var" && ! ( -d "app/cache" && -d "app/logs" ) ]] || [ ! -e "composer.json" ]
+then
+    echo "Pas de dossier var (Symfony 3) ou de dossiers app/cache et app/logs (Symfony 2).\nEtes vous sûr d'être dans un dossier projet Symfony ?";
+    exit 1;
+fi
+
+if [ -d "var" ]
+then
+    echo "Projet Symfony 3 détecté !";
+    HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1) && sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var && sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
+fi
+
+if [ -d "app/cache" ] && [ -d "app/logs" ]
+then
+    echo "Projet Symfony 2 détecté !";
+        HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1) && sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX app/cache app/logs && sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX app/logs app/cache
+fi
+
+if [ $? == 0 ]
+then
+    echo "Permission du cache OK";
+    exit 0;
+else
+    echo "Erreur lors de la configuration des permissions";
+    exit 1;
+fi

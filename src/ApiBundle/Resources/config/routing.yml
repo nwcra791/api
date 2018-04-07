@@ -1,0 +1,9 @@
+#api_homepage:
+#    path:     /
+#    defaults: { _controller: ApiBundle:Default:index }
+
+api_default:
+    resource: "@ApiBundle/Controller"
+    defaults: {format: json}
+    prefix: /
+    type: annotation

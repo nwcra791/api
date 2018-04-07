@@ -1,0 +1,5 @@
+services:
+    api.xliffconverter:
+        class: ApiBundle\Service\XliffConverter
+        arguments: ['%kernel.project_dir%']
+
